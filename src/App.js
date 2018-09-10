@@ -6,15 +6,20 @@ const { Header, Sider, Content } = Layout;
 const SubMenu = Menu.SubMenu;
 
 class App extends Component {
-  state = {
-    collapsed: false,
+  constructor() {
+    super()
+    this.state = {
+      collapsed: false
+    }
+    this.toggleCollapsed = this.toggleCollapsed.bind(this)
+    this.handleClick = this.handleClick.bind(this)
   }
-  toggleCollapsed = () => {
+  toggleCollapsed() {
     this.setState({
       collapsed: !this.state.collapsed,
     });
   }
-  handleClick = (e) => {
+  handleClick(e) {
     console.log('click ', e);
   }
   render() {
