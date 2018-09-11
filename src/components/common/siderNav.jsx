@@ -33,13 +33,13 @@ function siderHandle(routes, parent) {
 }
 
 class SiderNav extends Component {
-  // handleClick = (e) => {
-  //   console.log(e)
-  // }
+  handleClick = (e) => {
+    console.log(e)
+  }
   render() {
     return (
       <Menu
-        // onClick={this.handleClick}
+        onClick={this.handleClick}
         defaultSelectedKeys={['/index']}
         mode="inline"
       >
