@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Route, Switch as RouterSwitch } from 'react-router-dom'
 import { Layout } from 'antd';
-import { Menu, Icon, Button } from 'antd';
+import routes from 'src/router'
+import SiderNav from 'components/common/siderNav'
 import './App.less'
 const { Header, Sider, Content } = Layout;
-const SubMenu = Menu.SubMenu;
+
+function RouterCon() {
+  let routeList = routes.map((item, idx) => {
+    return <Route path={item.path} component={item.component} key={idx} />
+  })
+  return (
+    <BrowserRouter>
+      <div>
+        {routeList}
+      </div>
+    </BrowserRouter>
+  )
+}
 
 class App extends Component {
   constructor() {
@@ -16,7 +30,7 @@ class App extends Component {
   }
   toggleCollapsed() {
     this.setState({
-      collapsed: !this.state.collapsed,
+      collapsed: !this.state.collapsed
     });
   }
   handleClick(e) {
@@ -25,7 +39,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-
         <Layout className="app-layout">
           <Header className="app-header">Header</Header>
           <Layout>
@@ -36,14 +49,17 @@ class App extends Component {
               collapsed={this.state.collapsed}
               onCollapse={this.toggleCollapsed}
             >
-              <Menu
+              <SiderNav />
+              {/* <Menu
                 onClick={this.handleClick}
                 // style={{ width: 240, paddingRight: 8 }}
                 defaultSelectedKeys={['1']}
                 defaultOpenKeys={['sub1']}
                 mode="inline"
-                // inlineCollapsed={this.state.collapsed}
+                theme="dark"
+              // inlineCollapsed={this.state.collapsed}
               >
+                <Menu.Item key="12"><Icon type="appstore" /><span>Option 1</span></Menu.Item>
                 <SubMenu key="sub1" title={<span><Icon type="mail" /><span>Navigation One</span></span>}>
                   <Menu.Item key="1">Option 1</Menu.Item>
                   <Menu.Item key="2">Option 2</Menu.Item>
@@ -74,10 +90,13 @@ class App extends Component {
                   <Menu.Item key="19">Option 11</Menu.Item>
                   <Menu.Item key="20">Option 121100000</Menu.Item>
                 </SubMenu>
-              </Menu>
+              </Menu> */}
               <div className="zoom-fix"></div>
             </Sider>
-            <Content>Content</Content>
+            <Content>
+              Content
+              <RouterCon />
+            </Content>
           </Layout>
         </Layout>
       </div>
