@@ -1,46 +1,79 @@
 import React, { Component } from 'react';
 import routes from 'src/router';
+import { Link, withRouter } from 'react-router-dom';
 import { Menu, Icon } from 'antd';
 const SubMenu = Menu.SubMenu;
 
-function siderHandle(routes, parent) {
-  let siderList = routes.map((item, idx) => {
-    if (item.routes) {
+function siderHandle(routes) {
+  let siderList = routes.map(item => {
+    if (item.routes) { // 子菜单渲染
       let subList = siderHandle(item.routes, item)
-      if (parent) {
-        return (
-          <SubMenu key={item.path} title={<span>{item.meta.title}</span>}>
-            {subList}
-          </SubMenu>
-        )
-      } else {
-        return (
-          <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.meta.title}</span></span>}>
-            {subList}
-          </SubMenu>
-        )
-      }
-
-    } else {
-      if (parent) {
-        return <Menu.Item key={item.path}>{item.meta.title}</Menu.Item>
-      } else {
-        return <Menu.Item key={item.path}><Icon type={item.icon} /><span>{item.meta.title}</span></Menu.Item>
-      }
+      return (
+        <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.meta.title}</span></span>}>
+          {subList}
+        </SubMenu>
+      )
+    } else { // 菜单项渲染
+      return (
+        <Menu.Item key={item.path}>
+          <Link to={item.path}>
+            <Icon type={item.icon} />
+            <span>{item.meta.title}</span>
+          </Link>
+        </Menu.Item>
+      )
     }
   })
   return siderList
 }
 
 class SiderNav extends Component {
+  state = {
+    subOpen: [],
+    selectKeys: [],
+    flag: false
+  }
   handleClick = (e) => {
-    console.log(e)
+    // console.log(e)
+    // console.log(ab)
+  }
+  _setMenuKeys(routes, parent) { // 设置侧边导航菜单栏，刷新时展开对应菜单项
+    let routerList = routes.find(routerItem => {
+      if (routerItem.routes) {
+        return this._setMenuKeys(routerItem.routes, routerItem)
+      } else {
+        if (routerItem.path === this.props.location.pathname) {
+          this.setState({
+            selectKeys: [routerItem.path]
+          })
+
+          if (parent) {
+            this.setState({
+              subOpen: [parent.path]
+            })
+          }
+          return true
+        }
+        return false
+      }
+    })
+    return routerList
+  }
+  componentWillMount() {
+    let rootRouter = this._setMenuKeys(routes)
+    this.setState((prevState) => {
+      let list = new Set([...prevState.subOpen, rootRouter.path]) // 去重
+      return {
+        subOpen: [...list]
+      }
+    })
   }
   render() {
     return (
       <Menu
         onClick={this.handleClick}
-        defaultSelectedKeys={['/index']}
+        defaultOpenKeys={this.state.subOpen}
+        defaultSelectedKeys={this.state.selectKeys}
         mode="inline"
       >
         {siderHandle(routes)}
@@ -49,4 +82,4 @@ class SiderNav extends Component {
   }
 }
 
-export default SiderNav
+export default withRouter(SiderNav)

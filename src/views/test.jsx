@@ -6,7 +6,7 @@ class Test extends Component {
     return (
       <div>
         <div>test</div>
-        <Link to='/index'>index</Link>
+        <Link to='/index'>index---test</Link>
       </div>
     )
   }
