@@ -29,8 +29,8 @@ function siderHandle(routes) {
 
 class SiderNav extends Component {
   state = {
-    subOpen: [],
-    selectKeys: [],
+    subOpen: [], //  SubMenu 菜单项展开项
+    selectKeys: [], // 选中的菜单项
     flag: false
   }
   handleClick = (e) => {
@@ -61,12 +61,18 @@ class SiderNav extends Component {
   }
   componentWillMount() {
     let rootRouter = this._setMenuKeys(routes)
-    this.setState((prevState) => {
-      let list = new Set([...prevState.subOpen, rootRouter.path]) // 去重
-      return {
-        subOpen: [...list]
-      }
-    })
+    if (rootRouter) { // 只渲染在路由列表中的页面
+      this.setState((prevState) => {
+        let list = new Set([...prevState.subOpen, rootRouter.path]) // 去重
+        return {
+          subOpen: [...list]
+        }
+      })
+    } else {
+      this.setState({
+        selectKeys: ['/index']
+      })
+    }
   }
   render() {
     return (

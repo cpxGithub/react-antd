@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import { NoMatch } from 'src/router';
 import { Layout } from 'antd';
 import routes from 'src/router';
 import SiderNav from 'components/common/siderNav';
@@ -12,7 +13,11 @@ function setRouter(routes) { // 页面路由渲染
     if (router.routes) {
       routeList.push(...setRouter(router.routes))
     } else {
-      routeList.push(<Route path={router.path} component={router.component} exact={router.exact} key={router.path} />)
+      if (router.redirect) { // 重定向路由
+        routeList.push(<Redirect exact from='/' to='/index' key='757' />)
+      } else {
+        routeList.push(<Route path={router.path} component={router.component} key={router.path} />)
+      }
     }
     return router
   })
@@ -58,6 +63,10 @@ class App extends Component {
             <Content>
               <Switch>
                 {setRouter(routes)}
+                {/* 根域名重定向到首页 */}
+                <Redirect exact from='/' to='/index' />
+                {/* 未匹配页面显示404 */}
+                <Route component={NoMatch} />
               </Switch>
             </Content>
           </Layout>

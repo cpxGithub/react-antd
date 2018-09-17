@@ -12,7 +12,7 @@ class AppIndex extends Component {
     return (
       <div>
         <div>首页</div>
-        <Link to='/shop/list'>test</Link>
+        <Link to='/shop/list'>test---{this.props.match.params.ids}</Link>
         <hr />
         <div>
           <Route path='/shop/:topicId' component={Test} />

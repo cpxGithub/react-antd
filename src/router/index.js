@@ -1,12 +1,11 @@
 import Loadable from 'react-loadable';
-import React from 'react'
+import React from 'react';
 
 export default [
   {
     path: '/index',
     meta: { title: '首页' },
     icon: 'home',
-    breadcrumbName: '首页',
     component: Loadable({
       loader: () => import('src/views/index'),
       loading: () => (<div>66</div>)
@@ -25,10 +24,6 @@ export default [
     path: '/index11',
     meta: { title: '测试1' },
     icon: 'home',
-    component: Loadable({
-      loader: () => import('src/views/index'),
-      loading: () => (<div>66</div>)
-    }),
     routes: [
       {
         path: '/index22',
@@ -42,13 +37,8 @@ export default [
   },
   {
     path: '/shop',
-    // exact: true,
     meta: { title: '店铺' },
     icon: 'shop',
-    // component: Loadable({
-    //   loader: () => import('src/views/shop'),
-    //   loading: () => (<div>66</div>)
-    // }),
     routes: [
       {
         path: '/shop/list',
@@ -61,10 +51,6 @@ export default [
       {
         path: '/shop/list2',
         meta: { title: '店铺列表13' },
-        component: Loadable({
-          loader: () => import('src/views/shop'),
-          loading: () => (<div>66</div>)
-        }),
         routes: [
           {
             path: '/shop/list1',
@@ -79,3 +65,12 @@ export default [
     ]
   }
 ]
+
+const NoMatch = Loadable({ // 404页面
+  loader: () => import('src/views/noMatch/index'),
+  loading: () => (<div>66</div>),
+})
+
+export {
+  NoMatch
+}
