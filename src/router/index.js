@@ -1,5 +1,5 @@
 import Loadable from 'react-loadable';
-import React from 'react';
+import Loading from 'src/views/loading';
 
 export default [
   {
@@ -8,7 +8,7 @@ export default [
     icon: 'home',
     component: Loadable({
       loader: () => import('src/views/index'),
-      loading: () => (<div>66</div>)
+      loading: Loading
     })
   },
   {
@@ -17,7 +17,7 @@ export default [
     icon: 'home',
     component: Loadable({
       loader: () => import('src/views/index'),
-      loading: () => (<div>66</div>)
+      loading: Loading
     })
   },
   {
@@ -30,7 +30,7 @@ export default [
         meta: { title: '测试22' },
         component: Loadable({
           loader: () => import('src/views/index'),
-          loading: () => (<div>66</div>)
+          loading: Loading
         }),
       }
     ]
@@ -45,7 +45,7 @@ export default [
         meta: { title: '店铺列表' },
         component: Loadable({
           loader: () => import('src/views/shop/list'),
-          loading: () => (<div>66</div>)
+          loading: Loading
         }) 
       },
       {
@@ -56,8 +56,8 @@ export default [
             path: '/shop/list1',
             meta: { title: '店铺列表' },
             component: Loadable({
-              loader: () => import('src/views/test'),
-              loading: () => (<div>66</div>)
+              loader: () => import('src/views/shop'),
+              loading: Loading
             })
           }
         ]
@@ -68,7 +68,7 @@ export default [
 
 const NoMatch = Loadable({ // 404页面
   loader: () => import('src/views/noMatch/index'),
-  loading: () => (<div>66</div>),
+  loading: Loading
 })
 
 export {
