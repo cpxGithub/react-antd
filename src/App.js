@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
-import { NoMatch } from 'src/router';
+import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
+import { Login, NoMatch } from 'src/router';
 import { Layout } from 'antd';
 import routes from 'src/router';
 import SiderNav from 'components/common/siderNav';
@@ -42,11 +42,14 @@ class App extends Component {
     console.log('click ', e);
   }
   componentDidMount() {
-    // console.log(86, this)
+    console.log(86, this)
   }
   render() {
-    return (
-      <div className="App">
+    let conData
+    if (this.props.location.pathname === '/login') {
+      conData = <Route exact path='/login' component={Login} />
+    } else {
+      conData = (
         <Layout className="app-layout">
           <Header className="app-header">Header</Header>
           <Layout>
@@ -67,13 +70,18 @@ class App extends Component {
                 <Redirect exact from='/' to='/index' />
                 {/* 未匹配页面显示404 */}
                 <Route component={NoMatch} />
-              </Switch>
+                </Switch>
             </Content>
           </Layout>
         </Layout>
+      )
+    }
+    return (
+      <div className="App">
+        {conData}
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

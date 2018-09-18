@@ -14,14 +14,18 @@ function siderHandle(routes) {
         </SubMenu>
       )
     } else { // 菜单项渲染
-      return (
-        <Menu.Item key={item.path}>
-          <Link to={item.path}>
-            <Icon type={item.icon} />
-            <span>{item.meta.title}</span>
-          </Link>
-        </Menu.Item>
-      )
+      if (item.hidden) {
+        return ''
+      } else {
+        return (
+          <Menu.Item key={item.path}>
+            <Link to={item.path}>
+              <Icon type={item.icon} />
+              <span>{item.meta.title}</span>
+            </Link>
+          </Menu.Item>
+        )
+      }
     }
   })
   return siderList

@@ -2,6 +2,15 @@ import Loadable from 'react-loadable';
 import Loading from 'src/views/loading';
 
 export default [
+  // {
+  //   path: '/login',
+  //   meta: { title: '登录' },
+  //   hidden: true,
+  //   component: Loadable({
+  //     loader: () => import('src/views/login'),
+  //     loading: Loading
+  //   })
+  // },
   {
     path: '/index',
     meta: { title: '首页' },
@@ -66,11 +75,16 @@ export default [
   }
 ]
 
+const Login = Loadable({ // 登录页
+  loader: () => import('src/views/login/index'),
+  loading: () => ('')
+})
 const NoMatch = Loadable({ // 404页面
   loader: () => import('src/views/noMatch/index'),
   loading: Loading
 })
 
 export {
+  Login,
   NoMatch
 }
