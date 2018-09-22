@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 class ShopList extends Component {
   componentDidMount() {
-    console.log(10, this)
+    // console.log(10, this)
   }
   linkTo = () => {
     this.props.history.push('/shop/add')

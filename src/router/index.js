@@ -21,12 +21,12 @@ export default [
     })
   },
   {
-    path: '/index11',
+    path: '/test',
     meta: { title: '测试1' },
     icon: 'home',
     routes: [
       {
-        path: '/index22',
+        path: '/test/index22',
         meta: { title: '测试22' },
         component: Loadable({
           loader: () => import('src/views/index'),
@@ -62,7 +62,7 @@ export default [
         meta: { title: '店铺列表13' },
         routes: [
           {
-            path: '/shop/list1',
+            path: '/shop/list2/list3',
             meta: { title: '店铺列表' },
             component: Loadable({
               loader: () => import('src/views/shop'),
@@ -70,7 +70,7 @@ export default [
             })
           },
           {
-            path: '/shop/add',
+            path: '/shop/list2/add',
             meta: { title: '添加店铺' },
             hidden: true,
             component: Loadable({

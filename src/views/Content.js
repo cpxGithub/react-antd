@@ -39,13 +39,13 @@ class AppContent extends Component {
     });
   }
   handleClick(e) {
-    console.log('click ', e);
+    // console.log('click ', e);
   }
   componentDidMount() {
-    console.log(86, this)
+    // console.log(86, this)
   }
   render() {
-    console.log(12, this)
+    // console.log(12, this)
     let conData
     if (this.props.location.pathname === '/login') {
       conData = <Route exact path='/login' component={Login} />

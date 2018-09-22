@@ -42,7 +42,7 @@ class SiderNav extends Component {
     // console.log(8, e)
   }
   onOpenChange = (openKeys) => {
-    console.log(122, openKeys)
+    // console.log(122, openKeys)
     // this.setState({ openKeys });
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -54,47 +54,65 @@ class SiderNav extends Component {
     }
   }
   _setMenuKeys(routes, parent) { // 设置侧边导航菜单栏，刷新时展开对应菜单项
-    let routerList = routes.find(routerItem => {
-      if (routerItem.routes) {
-        return this._setMenuKeys(routerItem.routes, routerItem)
-      } else {
-        if (routerItem.path === this.props.location.pathname) {
-          console.log(56, this.props.location.pathname)
-          // this.state.selectKeys.clear()
-          // this.state.openKeys.clear()
-          this.setState({
-            selectKeys: [routerItem.path]
-          })
-
-          if (parent) {
-            this.setState({
-              openKeys: [parent.path]
-            })
-          }
-          return true
-        }
-        return false
-      }
+    let { location } = this.props
+    let pathSnippets = location.pathname.split('/').filter(i => i)
+    // pathSnippets.forEach()
+    console.log(13, pathSnippets)
+    let openKeys
+    switch(pathSnippets.length) {
+      case 1: // 一级目录
+        break
+      case 2: // 二级目录
+        openKeys = [`/${pathSnippets[0]}`]
+        break
+      case 3: // 三级目录
+        openKeys = [`/${pathSnippets[0]}`, `/${pathSnippets[0]}/${pathSnippets[1]}`]
+    }
+    this.setState({
+      openKeys,
+      selectKeys: [location.pathname]
     })
-    return routerList
+    // let routerList = routes.find(routerItem => {
+    //   if (routerItem.routes) {
+    //     return this._setMenuKeys(routerItem.routes, routerItem)
+    //   } else {
+    //     if (routerItem.path === this.props.location.pathname) {
+    //       console.log(56, this.props.location.pathname)
+    //       // this.state.selectKeys.clear()
+    //       // this.state.openKeys.clear()
+    //       this.setState({
+    //         selectKeys: [routerItem.path]
+    //       })
+
+    //       if (parent) {
+    //         this.setState({
+    //           openKeys: [parent.path]
+    //         })
+    //       }
+    //       return true
+    //     }
+    //     return false
+    //   }
+    // })
+    // return routerList
   }
   componentWillMount() {
     let rootRouter = this._setMenuKeys(routes)
     if (rootRouter) { // 只渲染在路由列表中的页面
-      this.setState((prevState) => {
-        let list = new Set([...prevState.openKeys, rootRouter.path]) // 去重
-        return {
-          openKeys: [...list]
-        }
-      })
+      // this.setState((prevState) => {
+      //   let list = new Set([...prevState.openKeys, rootRouter.path]) // 去重
+      //   return {
+      //     // openKeys: [...list]
+      //   }
+      // })
     } else {
-      this.setState({
-        selectKeys: ['/index']
-      })
+      // this.setState({
+      //   selectKeys: ['/index']
+      // })
     }
   }
   componentWillReceiveProps(nextProps) {
-    console.log(11, this.props, nextProps)
+    // console.log(11, this.props, nextProps)
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.setState({
         selectKeys: [nextProps.location.pathname]
@@ -118,11 +136,12 @@ class SiderNav extends Component {
     // })
   }
   render() {
+    console.log(this.state)
     return (
       <Menu
         onClick={this.handleClick}
         defaultOpenKeys={this.state.openKeys}
-        defaultSelectedKeys={this.state.selectKeys}
+        // defaultSelectedKeys={this.state.selectKeys}
         onOpenChange={this.onOpenChange}
         openKeys={this.state.openKeys}
         selectedKeys={this.state.selectKeys}

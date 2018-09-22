@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom';
 
 class AppIndex extends Component {
   componentDidMount() {
-    console.log(this)
+    // console.log(this)
   }
   render() {
     return (
