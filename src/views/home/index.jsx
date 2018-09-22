@@ -3,17 +3,15 @@ import { Route, Link } from 'react-router-dom';
 
 class AppIndex extends Component {
   componentDidMount() {
-    setTimeout(() => {
-      // this.props.history.push('/shop/list2')
-    }, 3000)
+    console.log(this)
   }
   render() {
     return (
-      <div>
-        <div>首页</div>
-        <Link to='/shop/list'>test---{this.props.match.params.ids}</Link>
-        <hr />
-      </div>
+      <section>
+        <div>
+
+        </div>
+      </section>
     )
   }
 }

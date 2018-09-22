@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button, Avatar } from 'antd';
 import './login.less';
 const FormItem = Form.Item;
 
@@ -20,7 +20,10 @@ class Login extends Component {
         <div className="login-form">
           <Form onSubmit={this.handleSubmit} className="login-form">
             <FormItem>
-              <div className="title">用户登录</div>
+              <div style={{textAlign: "center"}}>
+                <Avatar size="large" icon="user" />
+                <p className="title">用户登录</p>
+              </div>
               {getFieldDecorator('userName', {
                 rules: [{ required: true, message: '请输入用户名!' }],
               })(

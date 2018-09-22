@@ -2,21 +2,12 @@ import Loadable from 'react-loadable';
 import Loading from 'src/views/loading';
 
 export default [
-  // {
-  //   path: '/login',
-  //   meta: { title: '登录' },
-  //   hidden: true,
-  //   component: Loadable({
-  //     loader: () => import('src/views/login'),
-  //     loading: Loading
-  //   })
-  // },
   {
     path: '/index',
     meta: { title: '首页' },
     icon: 'home',
     component: Loadable({
-      loader: () => import('src/views/index'),
+      loader: () => import('src/views/home/index'),
       loading: Loading
     })
   },
@@ -55,8 +46,17 @@ export default [
         component: Loadable({
           loader: () => import('src/views/shop/list'),
           loading: Loading
-        }) 
+        })
       },
+      // {
+      //   path: '/shop/add',
+      //   meta: { title: '添加店铺' },
+      //   hidden: true,
+      //   component: Loadable({
+      //     loader: () => import('src/views/shop/add'),
+      //     loading: Loading
+      //   })
+      // },
       {
         path: '/shop/list2',
         meta: { title: '店铺列表13' },
@@ -66,6 +66,15 @@ export default [
             meta: { title: '店铺列表' },
             component: Loadable({
               loader: () => import('src/views/shop'),
+              loading: Loading
+            })
+          },
+          {
+            path: '/shop/add',
+            meta: { title: '添加店铺' },
+            hidden: true,
+            component: Loadable({
+              loader: () => import('src/views/shop/add'),
               loading: Loading
             })
           }

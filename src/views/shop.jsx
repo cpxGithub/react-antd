@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class Shop extends Component {
+  componentDidMount() {
+    console.log(123, this)
+  }
   render() {
     return (
       <div>
