@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import routes from 'src/router';
 import { Link, withRouter } from 'react-router-dom';
-import { Menu, Icon } from 'antd';
+import { Menu, Icon, Layout } from 'antd';
 const SubMenu = Menu.SubMenu;
+const Sider = Layout.Sider;
 
 function siderHandle(routes) {
   let siderList = routes.map(item => {
@@ -36,22 +37,34 @@ class SiderNav extends Component {
   state = {
     openKeys: [], //  SubMenu 菜单项展开项
     selectKeys: [], // 选中的菜单项
+    collapsed: false,
     flag: 123
+  }
+  toggleCollapsed = (collapsed, type) => {
+    console.log(55, collapsed, type)
+    if (collapsed) {
+      this.setState({
+        openKeys: []
+      })
+    }
+    this.setState({
+      collapsed: !this.state.collapsed
+    });
   }
   handleClick = (e) => {
     // console.log(8, e)
   }
   onOpenChange = (openKeys) => {
     // console.log(122, openKeys)
-    // this.setState({ openKeys });
-    const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
-    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      this.setState({ openKeys });
-    } else {
-      this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
-      });
-    }
+    this.setState({ openKeys });
+    // const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+    // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //   this.setState({ openKeys });
+    // } else {
+    //   this.setState({
+    //     openKeys: latestOpenKey ? [latestOpenKey] : [],
+    //   });
+    // }
   }
   _setMenuKeys(routes, parent) { // 设置侧边导航菜单栏，刷新时展开对应菜单项
     let { location } = this.props
@@ -67,6 +80,9 @@ class SiderNav extends Component {
         break
       case 3: // 三级目录
         openKeys = [`/${pathSnippets[0]}`, `/${pathSnippets[0]}/${pathSnippets[1]}`]
+        break
+      default:
+        break
     }
     this.setState({
       openKeys,
@@ -138,17 +154,26 @@ class SiderNav extends Component {
   render() {
     console.log(this.state)
     return (
-      <Menu
-        onClick={this.handleClick}
-        defaultOpenKeys={this.state.openKeys}
-        // defaultSelectedKeys={this.state.selectKeys}
-        onOpenChange={this.onOpenChange}
-        openKeys={this.state.openKeys}
-        selectedKeys={this.state.selectKeys}
-        mode="inline"
+      <Sider
+        width='240'
+        className="app-sider"
+        collapsible
+        collapsed={this.state.collapsed}
+        onCollapse={this.toggleCollapsed}
       >
-        {siderHandle(routes)}
-      </Menu>
+        <Menu
+          onClick={this.handleClick}
+          defaultOpenKeys={this.state.openKeys}
+          // defaultSelectedKeys={this.state.selectKeys}
+          onOpenChange={this.onOpenChange}
+          openKeys={this.state.openKeys}
+          selectedKeys={this.state.selectKeys}
+          mode="inline"
+        >
+          {siderHandle(routes)}
+        </Menu>
+        <div className="zoom-fix"></div>
+      </Sider>
     )
   }
 }

@@ -1,11 +1,9 @@
-import React, { Component } from 'react';
-import './index.less'
+import { Component } from 'react';
+import './index.less';
 
 class NoMatch extends Component {
-  render() {
-    return (
-      <div className="no-match">404</div>
-    )
+  componentWillMount() {
+    this.props.history.push('/login')
   }
 }
 

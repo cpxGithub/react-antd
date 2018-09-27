@@ -30,16 +30,6 @@ class AppContent extends Component {
     this.state = {
       collapsed: false
     }
-    this.toggleCollapsed = this.toggleCollapsed.bind(this)
-    this.handleClick = this.handleClick.bind(this)
-  }
-  toggleCollapsed() {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
-  handleClick(e) {
-    // console.log('click ', e);
   }
   componentDidMount() {
     // console.log(86, this)
@@ -56,24 +46,15 @@ class AppContent extends Component {
             <HeaderNav />
           </Header>
           <Layout>
-            <Sider
-              width='240'
-              className="app-sider"
-              collapsible
-              collapsed={this.state.collapsed}
-              onCollapse={this.toggleCollapsed}
-            >
-              <SiderNav menu={routes} />
-              <div className="zoom-fix"></div>
-            </Sider>
+            <SiderNav menu={routes} />
             <Content>
               <Switch>
                 {setRouter(routes)}
                 {/* 根域名重定向到首页 */}
                 {/* <Redirect exact from='/' to='/index' /> */}
                 {/* 未匹配页面显示404 */}
-                <Redirect to='/login' />
-                {/* <Route component={NoMatch} /> */}
+                {/* <Redirect to='/login' /> */}
+                <Route component={NoMatch} />
                 </Switch>
             </Content>
           </Layout>

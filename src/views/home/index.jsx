@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import './index.less'
 
 class AppIndex extends Component {
   componentDidMount() {
@@ -8,8 +8,13 @@ class AppIndex extends Component {
   render() {
     return (
       <section>
-        <div>
-
+        <div className="data-list">
+          <div className="data-list-item">
+            <p>总览</p>
+            <p>300</p>
+          </div>
+          <div className="data-list-item"></div>
+          <div className="data-list-item"></div>
         </div>
       </section>
     )
