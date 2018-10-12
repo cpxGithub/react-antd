@@ -5,13 +5,16 @@ import { Menu, Icon, Layout } from 'antd';
 const SubMenu = Menu.SubMenu;
 const Sider = Layout.Sider;
 
+/**
+ * 设置侧边栏
+ * @param {Array} routes 路由列表
+ */
 function siderHandle(routes) {
   let siderList = routes.map(item => {
     if (item.routes) { // 子菜单渲染
-      let subList = siderHandle(item.routes, item)
       return (
         <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.meta.title}</span></span>}>
-          {subList}
+          {siderHandle(item.routes)}
         </SubMenu>
       )
     } else { // 菜单项渲染
@@ -32,16 +35,50 @@ function siderHandle(routes) {
   return siderList
 }
 
+/* eslint-disable */
+/**
+ * 测试
+ * @param {Array} routes 路由列表
+ */
+function filterSiderHandle(routes) {
+  let siderList = routes.filter(item => {
+    if (item.routes) { // 子菜单渲染
+      item.routes = filterSiderHandle(item.routes)
+      return true
+    } else { // 菜单项渲染
+      if (item.hidden) {
+        return false
+      } else {
+        return true
+      }
+    }
+  })
+  return siderList
+}
+
+function filterSiderHandle1(routes) {
+  let siderList = routes.reduce((acc, item) => {
+    if (item.routes) { // 子菜单渲染
+      item.routes = filterSiderHandle1(item.routes)
+      acc.push(item)
+    } else { // 菜单项渲染
+      if (!item.hidden) {
+        acc.push(item)
+      }
+    }
+    return acc;
+  }, [])
+  return siderList
+}
+/* eslint-enable */
+
 class SiderNav extends Component {
-  rootSubmenuKeys = ['/index11', '/shop'];
   state = {
     openKeys: [], //  SubMenu 菜单项展开项
     selectKeys: [], // 选中的菜单项
     collapsed: false,
-    flag: 123
   }
   toggleCollapsed = (collapsed, type) => {
-    console.log(55, collapsed, type)
     if (collapsed) {
       this.setState({
         openKeys: []
@@ -51,28 +88,14 @@ class SiderNav extends Component {
       collapsed: !this.state.collapsed
     });
   }
-  handleClick = (e) => {
-    // console.log(8, e)
-  }
   onOpenChange = (openKeys) => {
-    // console.log(122, openKeys)
     this.setState({ openKeys });
-    // const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
-    // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-    //   this.setState({ openKeys });
-    // } else {
-    //   this.setState({
-    //     openKeys: latestOpenKey ? [latestOpenKey] : [],
-    //   });
-    // }
   }
-  _setMenuKeys(routes, parent) { // 设置侧边导航菜单栏，刷新时展开对应菜单项
+  _setMenuKeys() { // 设置侧边导航菜单栏，刷新时展开对应菜单项
     let { location } = this.props
     let pathSnippets = location.pathname.split('/').filter(i => i)
-    // pathSnippets.forEach()
-    console.log(13, pathSnippets)
     let openKeys
-    switch(pathSnippets.length) {
+    switch (pathSnippets.length) {
       case 1: // 一级目录
         break
       case 2: // 二级目录
@@ -88,71 +111,18 @@ class SiderNav extends Component {
       openKeys,
       selectKeys: [location.pathname]
     })
-    // let routerList = routes.find(routerItem => {
-    //   if (routerItem.routes) {
-    //     return this._setMenuKeys(routerItem.routes, routerItem)
-    //   } else {
-    //     if (routerItem.path === this.props.location.pathname) {
-    //       console.log(56, this.props.location.pathname)
-    //       // this.state.selectKeys.clear()
-    //       // this.state.openKeys.clear()
-    //       this.setState({
-    //         selectKeys: [routerItem.path]
-    //       })
-
-    //       if (parent) {
-    //         this.setState({
-    //           openKeys: [parent.path]
-    //         })
-    //       }
-    //       return true
-    //     }
-    //     return false
-    //   }
-    // })
-    // return routerList
   }
   componentWillMount() {
-    let rootRouter = this._setMenuKeys(routes)
-    if (rootRouter) { // 只渲染在路由列表中的页面
-      // this.setState((prevState) => {
-      //   let list = new Set([...prevState.openKeys, rootRouter.path]) // 去重
-      //   return {
-      //     // openKeys: [...list]
-      //   }
-      // })
-    } else {
-      // this.setState({
-      //   selectKeys: ['/index']
-      // })
-    }
+    this._setMenuKeys(routes)
   }
   componentWillReceiveProps(nextProps) {
-    // console.log(11, this.props, nextProps)
     if (this.props.location.pathname !== nextProps.location.pathname) {
       this.setState({
         selectKeys: [nextProps.location.pathname]
       })
     }
-    // let rootRouter = this._setMenuKeys(routes)
-    // if (rootRouter) { // 只渲染在路由列表中的页面
-    //   this.setState((prevState) => {
-    //     let list = new Set([...prevState.openKeys, rootRouter.path]) // 去重
-    //     return {
-    //       openKeys: [...list]
-    //     }
-    //   })
-    // } else {
-    //   this.setState({
-    //     selectKeys: ['/index']
-    //   })
-    // }
-    // this.setState({
-    //   selectKeys: ['/index']
-    // })
   }
   render() {
-    console.log(this.state)
     return (
       <Sider
         width='240'
@@ -162,7 +132,6 @@ class SiderNav extends Component {
         onCollapse={this.toggleCollapsed}
       >
         <Menu
-          onClick={this.handleClick}
           defaultOpenKeys={this.state.openKeys}
           // defaultSelectedKeys={this.state.selectKeys}
           onOpenChange={this.onOpenChange}
@@ -178,4 +147,4 @@ class SiderNav extends Component {
   }
 }
 
-export default withRouter(SiderNav)
+export default withRouter(SiderNav);

@@ -16,9 +16,6 @@ class App extends React.Component {
     console.log(122, openKeys)
     this.setState({ openKeys });
   }
-  state = {
-    collapsed: false,
-  }
   toggleCollapsed = () => {
     this.setState({
       collapsed: !this.state.collapsed,
@@ -34,7 +31,7 @@ class App extends React.Component {
           defaultSelectedKeys={['1']}
           defaultOpenKeys={['sub1']}
           onOpenChange={this.onOpenChange}
-        openKeys={this.state.openKeys}
+          openKeys={this.state.openKeys}
         // selectedKeys={this.state.selectKeys}
           mode="inline"
           theme="dark"

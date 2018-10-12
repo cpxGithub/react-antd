@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Dropdown, Icon, Avatar } from 'antd';
-import './headerNav.less'
+import './headerNav.less';
 
 const menu = (
   <Menu>

@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Switch, Redirect, withRouter } from 'react-router-dom';
-import { Login, NoMatch } from 'src/router';
+import { Login } from 'src/router';
 import { Layout } from 'antd';
 import routes from 'src/router';
 import SiderNav from 'components/common/siderNav';
 import HeaderNav from 'components/common/headerNav';
-const { Header, Sider, Content } = Layout;
+import './index.less'
+const { Header, Content } = Layout;
 
 function setRouter(routes) { // 页面路由渲染
   let routeList = []
-  routes.map(router => {
+  routes.forEach(router => {
     if (router.routes) {
       routeList.push(...setRouter(router.routes))
     } else {
@@ -19,7 +20,6 @@ function setRouter(routes) { // 页面路由渲染
         routeList.push(<Route path={router.path} component={router.component} key={router.path} />)
       }
     }
-    return router
   })
   return routeList
 }
@@ -32,10 +32,9 @@ class AppContent extends Component {
     }
   }
   componentDidMount() {
-    // console.log(86, this)
+    if (this.props.location.pathname === '/') this.props.history.push('/login') // 根域名匹配直接跳转到登录页
   }
   render() {
-    // console.log(12, this)
     let conData
     if (this.props.location.pathname === '/login') {
       conData = <Route exact path='/login' component={Login} />
@@ -46,16 +45,13 @@ class AppContent extends Component {
             <HeaderNav />
           </Header>
           <Layout>
-            <SiderNav menu={routes} />
-            <Content>
+            <SiderNav />
+            <Content className="app-content">
               <Switch>
                 {setRouter(routes)}
-                {/* 根域名重定向到首页 */}
-                {/* <Redirect exact from='/' to='/index' /> */}
-                {/* 未匹配页面显示404 */}
+                {/* 未匹配页面重定向到登录页 */}
                 {/* <Redirect to='/login' /> */}
-                <Route component={NoMatch} />
-                </Switch>
+              </Switch>
             </Content>
           </Layout>
         </Layout>
