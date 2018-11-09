@@ -38,7 +38,7 @@ export default [
   {
     path: '/ant',
     meta: { title: 'ant组件' },
-    icon: 'shop',
+    icon: 'ant-design',
     routes: [
       {
         path: '/ant/tab',
@@ -66,6 +66,51 @@ export default [
             hidden: true,
             component: Loadable({
               loader: () => import('src/views/ant/add'),
+              loading: Loading
+            })
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '/shop',
+    meta: { title: '店铺' },
+    icon: 'shop',
+    routes: [
+      {
+        path: '/shop/goods-manage',
+        meta: { title: '商品管理' },
+        routes: [
+          {
+            path: '/shop/goods-manage/library',
+            meta: { title: '商品库' },
+            component: Loadable({
+              loader: () => import('src/views/shop/goodManage/library'),
+              loading: Loading
+            })
+          },
+          {
+            path: '/shop/goods-manage/classify',
+            meta: { title: '商品分类' },
+            component: Loadable({
+              loader: () => import('src/views/shop/goodManage/classify'),
+              loading: Loading
+            })
+          },
+          {
+            path: '/shop/goods-manage/specification',
+            meta: { title: '商品规格' },
+            component: Loadable({
+              loader: () => import('src/views/shop/goodManage/specification'),
+              loading: Loading
+            })
+          },
+          {
+            path: '/shop/goods-manage/comment',
+            meta: { title: '商品评论' },
+            component: Loadable({
+              loader: () => import('src/views/shop/goodManage/comment'),
               loading: Loading
             })
           }

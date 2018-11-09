@@ -13,7 +13,12 @@ function siderHandle(routes) {
   let siderList = routes.map(item => {
     if (item.routes) { // 子菜单渲染
       return (
-        <SubMenu key={item.path} title={<span><Icon type={item.icon} /><span>{item.meta.title}</span></span>}>
+        <SubMenu key={item.path} title={
+          <span>
+            {item.icon && <Icon type={item.icon} />}
+            <span>{item.meta.title}</span>
+          </span>
+        }>
           {siderHandle(item.routes)}
         </SubMenu>
       )
@@ -24,7 +29,7 @@ function siderHandle(routes) {
         return (
           <Menu.Item key={item.path}>
             <Link to={item.path}>
-              <Icon type={item.icon} />
+              {item.icon && <Icon type={item.icon} />}
               <span>{item.meta.title}</span>
             </Link>
           </Menu.Item>
